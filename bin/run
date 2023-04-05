@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+require_relative '../config/environment'
+
+
+def register
+
+  puts "Enter the following in
+  formation to create account:"
+  puts "Name:"
+  name = gets  
+  
+  email_exists = true
+  while email_exists #true
+    puts "Email:"
+    email = gets
+    
+    email_exists = User.email_exist(email)
+    if email_exists
+      puts "The email that you entered already exists"
+    end
+  end
+
+  phone_exists = true
+  while phone_exists #true
+    puts "Phone:"
+    phone = gets
+    
+    phone_exists = User.phone_number_exists(phone)
+    if phone_exists
+      puts "The email that you entered already exists"
+    end
+  end
+  
+  User.new(name, email, phone)
+
+end
+
+def deposit
+
+  mpesaClient = MpesaClient.new
+  # pp = mpesaClient.requst_payment 1, {enter your phone number here in this format 2547xxxxxxxx}
+end
+
+# register;
+deposit
+binding.pry
+
