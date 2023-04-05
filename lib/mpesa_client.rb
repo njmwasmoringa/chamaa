@@ -1,8 +1,8 @@
 class MpesaClient
     include HTTParty
 
-    @@consumer_key="9iAAOswuAtxhqi2KgGyXk3pTixJbdNBy"
-    @@consumer_secret="hleyMbhGBBbBvmW2"
+    @@consumer_key="pRYr6zjq0i8L1zzwQDMLpZB3yPCkhMsc"
+    @@consumer_secret="Rf22BfZog0qQGlV9"
 
     base_uri 'https://sandbox.safaricom.co.ke'
   
@@ -21,14 +21,16 @@ class MpesaClient
         )
     end
 
-    def requst_payment amount, mpesa_phone_number
+    def requst_payment(amount, mpesa_phone_number)
+        puts amount
+        puts mpesa_phone_number
         authorization = self.authorization
-        pp authorization["access_token"]
+        pp authorization
 
         passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
-        shortcode = 174379
-        timestamp = Time.now.to_i
-        password = Base64.strict_encode64("#{passkey}#{shortcode.to_s}#{timestamp}")
+        shortcode = "174379"
+        timestamp = Time.now.strftime '%Y%m%d%H%M%S'
+        password = Base64.strict_encode64("#{shortcode}#{passkey}#{timestamp}")
 
         query = {
             "BusinessShortCode": shortcode,    
