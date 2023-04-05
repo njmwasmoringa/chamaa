@@ -36,13 +36,20 @@ def register
 
 end
 
-def deposit
+def deposit 
+
+  puts "Enter your mpesa phone number(2547xxxxxxxx)"
+  phone = gets.chomp.to_s
+  
+  puts "Enter the amount"
+  amount = gets.chomp.to_i
+
 
   mpesaClient = MpesaClient.new
-  # pp = mpesaClient.requst_payment 1, {enter your phone number here in this format 2547xxxxxxxx}
+  pp = mpesaClient.requst_payment 1, phone
 end
 
 # register;
-deposit
+# deposit
 binding.pry
 

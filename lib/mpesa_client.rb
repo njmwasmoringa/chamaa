@@ -30,22 +30,27 @@ class MpesaClient
         timestamp = Time.now.to_i
         password = Base64.strict_encode64("#{passkey}#{shortcode.to_s}#{timestamp}")
 
+        query = {
+            "BusinessShortCode": shortcode,    
+            "Password": password,    
+            "Timestamp": timestamp,    
+            "TransactionType": "CustomerPayBillOnline",    
+            "Amount": amount,    
+            "PartyA": mpesa_phone_number,    
+            "PartyB": shortcode,    
+            "PhoneNumber": mpesa_phone_number,    
+            "CallBackURL": "https://njmwas.web.app/payment",    
+            "AccountReference": "Test",    
+            "TransactionDesc": "Test"
+        }
+
         self.class.post(
             '/mpesa/stkpush/v1/processrequest', {
-                :query => {
-                        :BusinessShortCode => shortcode,    
-                        :Password => password,    
-                        :Timestamp => "20160216165627",    
-                        :TransactionType => "CustomerPayBillOnline",    
-                        :Amount => amount,    
-                        :PartyA => mpesa_phone_number,    
-                        :PartyB => shortcode,    
-                        :PhoneNumber => mpesa_phone_number,    
-                        :CallBackURL => "https://localhost:3000",    
-                        :AccountReference => "Test",    
-                        :TransactionDesc => "Test"
-                },
-                :headers => {:Authorization => "Bearer #{authorization["access_token"]}"}
+                :query => query,
+                :headers => {
+                    :Authorization => "Bearer #{authorization["access_token"]}",
+                    :ContentType => "application/json"
+                }
             }
         )
     end
